@@ -55,7 +55,7 @@ $show_complete_tasks = rand(0, 1);
                 [
                     "task" => "Выполнить тестовое задание",
                     "date" => "25.12.2019",
-                    "category" => "25.12.2019",
+                    "category" => "Работа",
                     "completed" => false
                 ],
                 [
@@ -84,20 +84,26 @@ $show_complete_tasks = rand(0, 1);
                 ]
                 ];
 
-                $index = -1;
-                $num_count = count($categories);
+                function foo($tasks, $name) {
+                    $count = 0;                
+                    foreach ($tasks as $task) {
+                        if ($task['category'] == $name) {
+                            $count++;
+                        };
+                    };
+                            
+                    return $count;
+                }      
                 ?>
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-        
-                        <?php while($index < $num_count - 1): ?>
-                            <?php $index = $index + 1; ?>
+                        <?php foreach($categories as $category): ?>    
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#"><?=$categories[$index];?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                            <a class="main-navigation__list-item-link" href="#"><?=$category;?></a>
+                            <span class="main-navigation__list-item-count"><?=foo($tasks_list, $category)?></span>
                         </li>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     </ul>
                 </nav>
 
