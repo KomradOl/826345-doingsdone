@@ -84,14 +84,14 @@ $show_complete_tasks = rand(0, 1);
                 ]
                 ];
 
-                function foo($tasks, $name) {
+                function output_namber($tasks, $name) {
                     $count = 0;                
                     foreach ($tasks as $task) {
                         if ($task['category'] == $name) {
                             $count++;
                         };
                     };
-                            
+
                     return $count;
                 }      
                 ?>
@@ -101,7 +101,7 @@ $show_complete_tasks = rand(0, 1);
                         <?php foreach($categories as $category): ?>    
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link" href="#"><?=$category;?></a>
-                            <span class="main-navigation__list-item-count"><?=foo($tasks_list, $category)?></span>
+                            <span class="main-navigation__list-item-count"><?=output_namber($tasks_list, $category)?></span>
                         </li>
                         <?php endforeach; ?>
                     </ul>
