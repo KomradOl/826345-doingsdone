@@ -56,12 +56,12 @@
 
     }
 
-    $output_namber = output_namber($tasks_list, $category);
+
 
     $page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks, "tasks_list" => $tasks_list]);
 
     $layout_content = include_template("layout.php", ["content" => $page_content, "user_name" => "Константин", "title" => "Дела в порядке", "categories" =>
-        $categories, "output_namber" => output_namber, "category" => $category, "tasks_list" => $tasks_list]);
+        $categories,  "category" => $category, "tasks_list" => $tasks_list]);
 
     print($layout_content);
     ?>
