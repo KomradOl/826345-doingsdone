@@ -30,16 +30,19 @@
             <th>Категории</th>
             <th>Выполнен</th>
         </tr>
-        <?php foreach ($tasks_list as $task): ?> 
-            <? $completed = $task['completed'] ?>
+        <?php foreach ($tasks_list as $task): ?>
+            <? extract($task); ?> 
 
+            <? $dt_now = date_create(); ?>
+            <? $dt_end = date_create($date); ?>
+            <? $dt_diff = date_interval_format(date_diff($dt_end, $dt_now), "%d"); ?>   
             <? if($show_complete_tasks != 0 || !$completed) : ?>
-                <tr class="tasks__item <?=$completed ? 'task--completed' : '' ?>">
-                    <td><?=$task['task']?></td>
-                    <td><?=$task['date']?></td>
-                    <td><?=$task['category']?></td>
+                <tr class="tasks__item <?=$completed ? 'task--completed' : $dt_diff <= 1 ? 'task--important' :  '' ?>">
+                    <td><?=$task ?></td>
+                    <td class="task__date"><?=$date ?></td>
+                    <td><?=$category ?></td>
                     <td><?=$completed ? 'Да' : 'Нет' ?></td>
                 </tr>
-            <? endif;?>
+            <? endif;?>        
         <?php endforeach;?>
     </table>

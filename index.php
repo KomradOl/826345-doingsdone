@@ -3,12 +3,16 @@
 // показывать или нет выполненные задачи
     $show_complete_tasks = rand(0, 1);
 
+    date_default_timezone_set("Europe/Samara");
+    setlocale(LC_ALL, "ru_RU.utf8");
+    $dt_now = date_create("now");
+
     $categories = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
     
     $tasks_list = [
     [
         "task" => "Собеседование в IT компании",
-        "date" => "01.12.2019",
+        "date" => "08.02.2019",
         "category" => "Работа",
         "completed" => false
     ],
@@ -32,13 +36,13 @@
     ],
     [
         "task" => "Купить корм для кота",
-        "date" => "Нет",
+        "date" => NULL,
         "category" => "Домашние дела",
         "completed" => false
     ],
     [
         "task" => "Заказать пиццу",
-        "date" => "Нет",
+        "date" => NULL,
         "category" => "Домашние дела",
         "completed" => false
     ]
@@ -57,8 +61,7 @@
     }
 
 
-
-    $page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks, "tasks_list" => $tasks_list]);
+    $page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks, "tasks_list" => $tasks_list, "dt_now" => $dt_now]);
 
     $layout_content = include_template("layout.php", ["content" => $page_content, "user_name" => "Константин", "title" => "Дела в порядке", "categories" =>
         $categories,  "category" => $category, "tasks_list" => $tasks_list]);
