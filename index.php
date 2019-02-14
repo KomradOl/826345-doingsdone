@@ -1,52 +1,26 @@
 <?php
     require_once("functions.php");
+
 // показывать или нет выполненные задачи
     $show_complete_tasks = rand(0, 1);
-    $categories = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
-    
-    $tasks_list = [
-    [
-        "task" => "Собеседование в IT компании",
-        "date" => "01.12.2019",
-        "category" => "Работа",
-        "completed" => false
-    ],
-    [
-        "task" => "Выполнить тестовое задание",
-        "date" => "25.12.2019",
-        "category" => "Работа",
-        "completed" => false
-    ],
-    [
-        "task" => "Сделать задание первого раздела",
-        "date" => "21.12.2019",
-        "category" => "Учеба",
-        "completed" => true
-    ],
-    [
-        "task" => "Встреча с другом",
-        "date" => "22.12.2019",
-        "category" => "Входящие",
-        "completed" => false
-    ],
-    [
-        "task" => "Купить корм для кота",
-        "date" => "нет",
-        "category" => "Домашние дела",
-        "completed" => false
-    ],
-    [
-        "task" => "Заказать пиццу",
-        "date" => "нет",
-        "category" => "Домашние дела",
-        "completed" => false
-    ]
-    ];
 
-    function output_namber($tasks, $name) {
+    $con = mysqli_connect("localhost", "root", "", "works") or die (mysqli_error($con));
+
+    mysqli_set_charset($con, "utf8");
+
+    $sql_project = "SELECT name FROM project WHERE user_id = 1";
+    $result_project = mysqli_query($con, $sql_project) or die (mysqli_error($con));
+    $categories = mysqli_fetch_all($result_project, MYSQLI_ASSOC);
+
+    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname FROM tasks t join project p on p.ID = t.PROJECT_ID WHERE t.user_id = 1";
+    $result_tasks = mysqli_query($con, $sql_tasks) or die (mysqli_error($con));
+    $tasks_list = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
+    
+
+    function output_namber($tasks_list, $name) {
         $count = 0;                
-        foreach ($tasks as $task) {
-            if ($task['category'] == $name) {
+        foreach ($tasks_list as $task) {
+            if ($task['pname'] == $name) {
                 $count++;
             };
         };
@@ -71,11 +45,13 @@
         return  $dt_warn;
         
     }
+    
 
     $page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks, "tasks_list" => $tasks_list]);
 
     $layout_content = include_template("layout.php", ["content" => $page_content, "user_name" => "Константин", "title" => "Дела в порядке",
-     "categories" => $categories,  "category" => $category, "tasks_list" => $tasks_list]);
+     "categories" => $categories, "tasks_list" => $tasks_list]);
 
     print($layout_content);
-    ?>
+
+   ?>

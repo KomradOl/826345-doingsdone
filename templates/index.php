@@ -31,12 +31,12 @@
             <th>Выполнен</th>
         </tr>
         <?php foreach ($tasks_list as $task): ?>
-            <?extract($task); ?>
+
             <? if($show_complete_tasks != 0 || !$completed) : ?>
-                <tr class="tasks__item <?=$completed ? 'task--completed' : ''; print(warn_date($tasks_list, $date)) ?>">
-                    <td><?=$task ?></td>
-                    <td class="task__date"><?=$date ?></td>
-                    <td><?=$category ?></td>
+                <tr class="tasks__item <?=$completed ? 'task--completed' : ''; print(warn_date($tasks_list, $task['date_exec'] )) ?>">
+                    <td><?=$task['name'] ?></td>
+                    <td class="task__date"><?=$task['date_exec'] ?></td>
+                    <td><?=$task['pname'] ?></td>
                     <td><?=$completed ? 'Да' : 'Нет' ?></td>
                 </tr>
 

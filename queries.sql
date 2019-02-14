@@ -1,6 +1,6 @@
 INSERT INTO project (name, user_id) 
 VALUES 
-("Входящие", 2), ("Авто", 1), ("Домашние дела", 2), ("Работа", 1), ("Учеба", 1);
+("Входящие", 2), ("Авто", NULL), ("Домашние дела", 2), ("Работа", 1), ("Учеба", 1);
 
 INSERT INTO users (date_reg, name, email, pass)
 VALUES 
