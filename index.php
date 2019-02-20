@@ -1,5 +1,4 @@
 <?php
-
     require_once("functions.php");
 // показывать или нет выполненные задачи
     $show_complete_tasks = rand(0, 1);
@@ -16,11 +15,9 @@
     $result_tasks = mysqli_query($con, $sql_tasks) or die (mysqli_error($con));
     $tasks_list = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
 
-    $tab = $_GET["tab"] ?? "popular";
-      
-    if($tab = $_GET["tab"]) {
     
       
+    if($tab = $_GET["tab"] ?? NULL) {  
     $nam_tasks = "SELECT name FROM tasks WHERE project_id = $tab";
     $result_nam_tasks = mysqli_query($con, $nam_tasks) or die (mysqli_error($con));
     $tasks_nam_list = mysqli_fetch_all($result_nam_tasks, MYSQLI_ASSOC);
@@ -30,8 +27,8 @@
     $sq_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.project_id = $tab";
     $res_tasks = mysqli_query($con, $sq_tasks) or die (mysqli_error($con));
     $tasks_list = mysqli_fetch_all($res_tasks, MYSQLI_ASSOC);
-        };       
-   };
+    };       
+    };
     
 
     $r_tab = $tab - 1;
@@ -41,8 +38,8 @@
     if (!array_key_exists($r_tab, $categories_id)) {
     http_response_code(404);
     exit;
-}  
-};
+    }  
+    };
     
 
     function output_namber($tasks_list, $p_id) {
