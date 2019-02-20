@@ -14,10 +14,9 @@
     $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id   FROM tasks t join project p on p.ID = t.PROJECT_ID WHERE t.user_id = 1";
     $result_tasks = mysqli_query($con, $sql_tasks) or die (mysqli_error($con));
     $tasks_list = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
-
-    
-      
-    if($tab = $_GET["tab"] ?? NULL) {  
+   
+    if($tab = $_GET["tab"] ?? NULL) {
+    $tab = (int)$tab;  
     $nam_tasks = "SELECT name FROM tasks WHERE project_id = $tab";
     $result_nam_tasks = mysqli_query($con, $nam_tasks) or die (mysqli_error($con));
     $tasks_nam_list = mysqli_fetch_all($result_nam_tasks, MYSQLI_ASSOC);
