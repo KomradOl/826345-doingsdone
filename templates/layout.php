@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <title><?=$title;?></title>
@@ -45,8 +44,8 @@
                     <ul class="main-navigation__list">
                         <?php foreach($categories as $cat): ?>    
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#"><?=$cat['name'];?></a>
-                            <span class="main-navigation__list-item-count"><?=output_namber($tasks_list, $cat['name'])?></span>
+                            <a class="main-navigation__list-item-link" href="index.php?tab=<?=$cat['id']?>"><?=$cat['name'];?></a>
+                            <span class="main-navigation__list-item-count"><?=output_namber($tasks_list, $cat['id'])?></span>
                         </li>
                         <?php endforeach; ?>
                     </ul>
