@@ -7,28 +7,25 @@
 
     mysqli_set_charset($con, "utf8");
 
+    
+    if($tab = $_GET["tab"] ?? NULL) {
+    $tab = (int)$tab;
+
     $sql_project = "SELECT name, id FROM project WHERE user_id = 1";
     $result_project = mysqli_query($con, $sql_project) or die (mysqli_error($con));
-    $categories = mysqli_fetch_all($result_project, MYSQLI_ASSOC);
-
-    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id   FROM tasks t join project p on p.ID = t.PROJECT_ID WHERE t.user_id = 1";
-    $result_tasks = mysqli_query($con, $sql_tasks) or die (mysqli_error($con));
-    $tasks_list = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
-   
-    if($tab = $_GET["tab"] ?? NULL) {
-    $tab = (int)$tab;  
-    $nam_tasks = "SELECT name FROM tasks WHERE project_id = $tab";
+    $categories = mysqli_fetch_all($result_project, MYSQLI_ASSOC);  
+    
+    $nam_tasks = "SELECT name FROM tasks WHERE project_id = $tab ";
     $result_nam_tasks = mysqli_query($con, $nam_tasks) or die (mysqli_error($con));
     $tasks_nam_list = mysqli_fetch_all($result_nam_tasks, MYSQLI_ASSOC);
 
-    foreach ($tasks_nam_list as $task) {
-        if (isset($task['name'])) {
-    $sq_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.project_id = $tab";
-    $res_tasks = mysqli_query($con, $sq_tasks) or die (mysqli_error($con));
-    $tasks_list = mysqli_fetch_all($res_tasks, MYSQLI_ASSOC);
-    };       
+    if (!empty($tasks_nam_list)) {
+    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.project_id = $tab";
+    } else {
+    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.user_id = 1";
     };
-    
+    $result_tasks = mysqli_query($con, $sql_tasks) or die (mysqli_error($con));
+    $tasks_list = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);       
 
     $r_tab = $tab - 1;
     $sqli_project = "SELECT id FROM project";
@@ -37,9 +34,17 @@
     if (!array_key_exists($r_tab, $categories_id)) {
     http_response_code(404);
     exit;
-    }  
-    };
+    }
+
+    } else {
+    $sql_project = "SELECT name, id FROM project WHERE user_id = 1";
+    $result_project = mysqli_query($con, $sql_project) or die (mysqli_error($con));
+    $categories = mysqli_fetch_all($result_project, MYSQLI_ASSOC);
     
+    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.user_id = 1";
+    $result_tasks = mysqli_query($con, $sql_tasks) or die (mysqli_error($con));
+    $tasks_list = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
+    }
 
     function output_namber($tasks_list, $p_id) {
         $count = 0;              
