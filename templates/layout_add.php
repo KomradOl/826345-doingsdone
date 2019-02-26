@@ -80,7 +80,7 @@
       <main class="content__main">
         <h2 class="content__main-heading">Добавление задачи</h2>
 
-        <form class="form"  action="add.php" method="post">
+        <form class="form"  action="add.php" method="post" enctype="multipart/form-data">
           <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>    
           <?php if(isset($errors['name'])) : ?>
@@ -117,7 +117,9 @@
 
           <div class="form__row">
             <label class="form__label" for="preview">Файл</label>
-
+            <?php if(isset($errors['preview'])) : ?>
+            <p class="form__message"><?=$errors['preview']?></p>
+            <?php endif ?>
             <div class="form__input-file">
               <input class="visually-hidden" type="file" name="preview" id="preview" value="">
 
