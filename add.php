@@ -52,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         
         $file_type = $_FILES['preview']['type'];
-        if ($file_type !== "image/jpeg" && $file_type !== "image/png") {
-            $errors['preview'] = 'Загрузите картинку в формате JPEG';
+        if ($file_type !== "image/jpeg" && $file_type !== "image/png" && $file_type !== "image/jpeg") {
+            $errors['preview'] = 'Загрузите картинку в правильном формате';
         
         } else {
             move_uploaded_file($tmp_name, '' . $path);
