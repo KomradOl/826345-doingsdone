@@ -24,8 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $required = ['name', 'project', 'date_exec'];
     $dict = ['title' => 'Название', 'project' => 'Проект', 'date_exec'=> 'Дата выполнения', 'file' => ''];
     $errors = [];
-    print_r($_POST);
-    print_r($_FILES);
+
     foreach ($required as $key) {
         if (empty($_POST[$key])) {
             $errors[$key] = 'Это поле надо заполнить';
@@ -53,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         
         $file_type = $_FILES['preview']['type'];
-        if ($file_type !== "image/jpeg") {
+        if ($file_type !== "image/jpeg" && $file_type !== "image/png") {
             $errors['preview'] = 'Загрузите картинку в формате JPEG';
-        }
-        else {
+        
+        } else {
             move_uploaded_file($tmp_name, '' . $path);
             $task['file'] = $path;
         }
