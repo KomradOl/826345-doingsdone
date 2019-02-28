@@ -2,11 +2,16 @@
     require_once("functions.php");
 // показывать или нет выполненные задачи
     $show_complete_tasks = rand(0, 1);
-  
+    if (isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+        $user_id = $user['id'];
+        $user_name = $user['name'];
+    
+
     if($tab = $_GET["tab"] ?? NULL) {
     $tab = (int)$tab;
 
-    $sql_project = "SELECT name, id FROM project WHERE user_id = 1";
+    $sql_project = "SELECT name, id FROM project WHERE user_id = $user_id";
     $result_project = mysqli_query($con, $sql_project) or die (mysqli_error($con));
     $categories = mysqli_fetch_all($result_project, MYSQLI_ASSOC);  
     
@@ -17,7 +22,7 @@
     if (!empty($tasks_nam_list)) {
     $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.project_id = $tab";
     } else {
-    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.user_id = 1";
+    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.user_id = $user_id";
     };
     $result_tasks = mysqli_query($con, $sql_tasks) or die (mysqli_error($con));
     $tasks_list = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);       
@@ -32,49 +37,19 @@
     }
 
     } else {
-    $sql_project = "SELECT name, id FROM project WHERE user_id = 1";
+    $sql_project = "SELECT name, id FROM project WHERE user_id = $user_id";
     $result_project = mysqli_query($con, $sql_project) or die (mysqli_error($con));
     $categories = mysqli_fetch_all($result_project, MYSQLI_ASSOC);
     
-    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.user_id = 1";
+    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.user_id = $user_id";
     $result_tasks = mysqli_query($con, $sql_tasks) or die (mysqli_error($con));
     $tasks_list = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
     }
-
-    function output_namber($tasks_list, $p_id) {
-        $count = 0;              
-  
-        foreach ($tasks_list as $task) {       
-            if ($task['project_id'] == $p_id) {
-                $count++;
-            };
-        };
-        return $count;
     }
-
-    function warn_date($tasks_list, $date){ 
-        date_default_timezone_set("Europe/Samara");
-        setlocale(LC_ALL, "ru_RU.utf8");
-        $ts = time();
-        $secs_in_day = 86400;
-        $dt_end = strtotime($date);
-        $dt_dif = $dt_end - $ts; 
-        $days_until_end = floor($dt_dif / $secs_in_day);
-
-         if($days_until_end < 0 && $days_until_end > -2) {
-            $dt_warn = "task--important";
-        };
-  
-        return  $dt_warn;
-        
-    }
-
-    
-
     $page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks, "tasks_list" => $tasks_list]);
-
-    $layout_content = include_template("layout.php", ["content" => $page_content, "user_name" => "Константин", "title" => "Дела в порядке",
-     "categories" => $categories, "tasks_list" => $tasks_list]);
+ 
+    $layout_content = include_template("layout.php", ["content" => $page_content, "title" => "Дела в порядке", "user_name" => $user_name,  "categories" => 
+        $categories, "tasks_list" => $tasks_list]);
 
     print($layout_content);
 

@@ -16,6 +16,7 @@ $con = mysqli_connect("localhost", "root", "", "works") or die (mysqli_error($co
 
     session_start();
 
+
 function db_get_prepare_stmt($con, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
 
@@ -71,3 +72,31 @@ function include_template($name, $data) {
 
     return $result;
 }
+
+    function output_namber($tasks_list, $p_id) {
+        $count = 0;              
+  
+        foreach ($tasks_list as $task) {       
+            if ($task['project_id'] == $p_id) {
+                $count++;
+            };
+        };
+        return $count;
+    }
+
+    function warn_date($tasks_list, $date){ 
+        date_default_timezone_set("Europe/Samara");
+        setlocale(LC_ALL, "ru_RU.utf8");
+        $ts = time();
+        $secs_in_day = 86400;
+        $dt_end = strtotime($date);
+        $dt_dif = $dt_end - $ts; 
+        $days_until_end = floor($dt_dif / $secs_in_day);
+
+         if($days_until_end < 0 && $days_until_end > -2) {
+            $dt_warn = "task--important";
+        };
+  
+        return  $dt_warn;
+        
+    }
