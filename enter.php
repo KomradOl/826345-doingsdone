@@ -1,10 +1,5 @@
 <?php
 require_once('functions.php');
-$con = mysqli_connect("localhost", "root", "", "works") or die (mysqli_error($con));
-
-    mysqli_set_charset($con, "utf8");
-
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$form = $_POST;
@@ -17,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     
-
 	$email = mysqli_real_escape_string($con, $form['email']);
 	$sql = "SELECT name, email, pass FROM users WHERE email = '$email'";
 	$res = mysqli_query($con, $sql);

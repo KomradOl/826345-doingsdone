@@ -1,7 +1,5 @@
 <?php
     require_once("functions.php");
-$con = mysqli_connect("localhost", "root", "", "works");
-    mysqli_set_charset($con, "utf8");
 if (!$con) {
     $error = mysqli_connect_error();
     show_error($content, $error);
@@ -22,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task = $_POST;
 
     $required = ['name', 'project', 'date_exec'];
-    $dict = ['title' => 'Название', 'project' => 'Проект', 'date_exec'=> 'Дата выполнения', 'file' => ''];
+    $dict = ['name' => 'Название', 'project' => 'Проект', 'date_exec'=> 'Дата выполнения', 'file' => ''];
     $errors = [];
 
     foreach ($required as $key) {

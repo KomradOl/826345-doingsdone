@@ -2,12 +2,7 @@
     require_once("functions.php");
 // показывать или нет выполненные задачи
     $show_complete_tasks = rand(0, 1);
-
-    $con = mysqli_connect("localhost", "root", "", "works") or die (mysqli_error($con));
-
-    mysqli_set_charset($con, "utf8");
-
-    
+  
     if($tab = $_GET["tab"] ?? NULL) {
     $tab = (int)$tab;
 
