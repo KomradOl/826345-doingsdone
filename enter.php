@@ -15,45 +15,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$email = mysqli_real_escape_string($con, $form['email']);
 	$sql = "SELECT name, email, pass FROM users WHERE email = '$email'";
 	$res = mysqli_query($con, $sql);
-
 	$user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
-	$us = $user['pass'];
-	$user_pass = password_hash($us, PASSWORD_DEFAULT);
-
 	
-	if (!count($errors) and $user) {
-
-		if($user['name']!== $form['name']) {
-			 	$errors['name'] = 'Введено неправильное имя';
-		}
-			
-		if (password_verify($form['password'], $user_pass)) {
-			$_SESSION['user'] = $user;
+	if ($user !== null) {
+		$errors['email'] = 'Такой E-mail уже используется';
+	}
+	else {
+		if (filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+			$email = $form['email'];
 		}
 		else {
-			$errors['password'] = 'Неверный пароль';
+			$errors['email'] = 'E-mail введён некорректно';
 		}
 
-	}
-	else {
-		$errors['email'] = 'E-mail введён некорректно';
+		$user['pass'] = $form['password'];
+		$user['name'] = $form['name'];
 	}
 
-	if (count($errors)) {
-		$content = include_template('enter_add.php', ['form' => $form, 'errors' => $errors, 'required' => $required]);
+	if (!count($errors)) {
+
+		$sql = "INSERT INTO users (date_reg, name, email, pass) VALUES (NOW(), ?, ?, ?)";
+        $stmt = db_get_prepare_stmt($con, $sql, [$form['name'], $form['email'], $form['password']]);
+        $res = mysqli_stmt_execute($stmt);
+        	header("Location: /auth.php");
+			exit();
+		}
 	
-	}
-	else {
-		$content = include_template('enter_add.php', ['form' => $form, 'errors' => $errors, 'required' => $required]);
-	}
-}
-else {
-    if (isset($_SESSION['user'])) {
-     $content = include_template("enter_add.php", ['form' => $form, 'errors' => $errors]);
-    }
-    else {
-        $content = include_template('enter_add.php', []);
-    }
+			
 }
 
-print($content);
+  $content = include_template('enter_add.php', ['form' => $form, 'errors' => $errors, 'required' => $required]);
+
+  print($content);
+
+?>
+

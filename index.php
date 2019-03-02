@@ -15,12 +15,12 @@
     $result_project = mysqli_query($con, $sql_project) or die (mysqli_error($con));
     $categories = mysqli_fetch_all($result_project, MYSQLI_ASSOC);  
     
-    $nam_tasks = "SELECT name FROM tasks WHERE project_id = $tab ";
+    $nam_tasks = "SELECT id, name FROM tasks WHERE project_id = $tab ";
     $result_nam_tasks = mysqli_query($con, $nam_tasks) or die (mysqli_error($con));
     $tasks_nam_list = mysqli_fetch_all($result_nam_tasks, MYSQLI_ASSOC);
 
     if (!empty($tasks_nam_list)) {
-    $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.project_id = $tab";
+    $sql_tasks = "SELECT t.date_exec, t.status, t.id, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.project_id = $tab";
     } else {
     $sql_tasks = "SELECT t.date_exec, t.status, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.user_id = $user_id";
     };
