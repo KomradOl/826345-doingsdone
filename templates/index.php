@@ -14,32 +14,38 @@
             <a href="/" class="tasks-switch__item">Просроченные</a>
         </nav>
 
-        <label class="checkbox">
-            <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
-            <?php if($show_complete_tasks == 1) : ?>
-                <input class="checkbox__input visually-hidden show_completed" type="checkbox" checked>
-            <?php endif; ?>
-            <span class="checkbox__text">Показывать выполненные</span>
-        </label>
+        <a href="index.php?chek">
+            <label class="checkbox">
+                <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
+                <?php if($show_complete_tasks == 1) : ?>
+                    <input class="checkbox__input visually-hidden show_completed" name="show" type="checkbox" checked>
+                <?php endif; ?>
+                <span class="checkbox__text">Показывать выполненные</span>
+            </label>
+        </a>
     </div>
 
     <table class="tasks">
-        <tr class="">
-            <th>Задачи</th>
-            <th>Дата выполнения</th>
-            <th>Категории</th>
-            <th>Выполнен</th>
-        </tr>
+        
         <?php foreach ($tasks_list as $task): ?>
-
-            <? if($show_complete_tasks != 0 || !$completed) : ?>
-                <tr class="tasks__item <?=$completed ? 'task--completed' : ''; print(warn_date($tasks_list, $task['date_exec'])) ?>">
-                    <td><?=$task['name'] ?></td>
-                    <td class="task__date"><?=$task['date_exec'] ?></td>
-                    <td><?=$task['pname'] ?></td>
-                    <td><?=$completed ? 'Да' : 'Нет' ?></td>
+            <? if ($task['status'] == 1) : ?>
+                <? $checked = "checked" ?>
+            <? else : $checked = "unchecked" ?> 
+            <?endif ?>
+            <? if($show_complete_tasks != 0 || $task['status'] != 1) : ?>
+                <?$complected = "task--completed"?>
+                <tr class="tasks__item task <?print(warn_date($tasks_list, $task['date_exec']))?>">
+                    <td class="task__select">
+                        <label class="checkbox task__checkbox">
+                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=$checked ?>>
+                            <span class="checkbox__text <?=$complected ?>"><a class="main-navigation__list-item-link" href="index.php?tabl=<?=$task['id']?>"><?=$task['name']?></a></span>
+                        </label>
+                    </td>
+                    <td class="task__file">
+                        <a class="download-link" href="/"><?=$task['file']?></a>
+                    </td>
+                    <td class="task__date"><?=$task['date_exec']?></td>
                 </tr>
-
-            <? endif;?>        
+          <? endif;?>       
         <?php endforeach;?>
     </table>

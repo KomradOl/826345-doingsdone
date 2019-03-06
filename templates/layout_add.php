@@ -20,11 +20,9 @@
       <?php $classproject = isset($errors['project']) ? "form__input--error" : "" ; $value_project = isset($task['project'])? $task['project'] : "";?>
       <select class="form__input form__input--select <?=$classproject?>" name="project" id="project">
         <option><?=$value_project?></option>
-        <option>Работа</option>
-        <option>Учеба</option>
-        <option>Авто</option>
-        <option>Входящие</option>
-        <option>Домашние дела</option>
+        <?php foreach($categories as $cat): ?>
+        <option><?=$cat['name']?></option>
+        <?endforeach ?>
       </select>
     </div>
 
@@ -34,7 +32,7 @@
       <p class="form__message"><?=$errors['date_exec']?></p>
       <?php endif ?>
       <?php $classdate = isset($errors['date_exec']) ? "form__input--error" : "" ; $value_date = isset($task['date_exec'])? $task['date_exec'] : "";?>
-      <input class="form__input form__input--date <?=$classdate?>" type="date" name="date_exec" id="date_exec" value="<?=$value_date?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+      <input class="form__input form__input--date <?=$classdate?>" type="date" name="date_exec" id="date_exec" value="<?=$value_date?>" placeholder="Введите дату в формате ГГГГ.ММ.ДД">
     </div>
 
     <div class="form__row">
