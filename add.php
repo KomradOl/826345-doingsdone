@@ -35,8 +35,8 @@ if (isset($_SESSION['user'])) {
             if ($project_id === null) {
                 $errors['project'] = 'Неправильный ввод имени проекта';
             }
-        
-        if ($_FILES['preview']['size'] !== 0) {
+            
+        if (isset($_FILES['preview']) && $_FILES['preview']['size'] !== 0) {
             $tmp_name = $_FILES['preview']['tmp_name'];
             $path     = $_FILES['preview']['name'];
             $file_type = $_FILES['preview']['type'];
