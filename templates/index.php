@@ -34,18 +34,24 @@
             <?endif ?>
             <? if($show_complete_tasks != 0 || $task['status'] != 1) : ?>
                 <?$complected = "task--completed"?>
-                <tr class="tasks__item task <?print(warn_date($tasks_list, $task['date_exec']))?>">
-                    <td class="task__select">
-                        <label class="checkbox task__checkbox">
-                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=$checked ?>>
-                            <span class="checkbox__text <?=$complected ?>"><a class="main-navigation__list-item-link" href="index.php?tabl=<?=$task['id']?>"><?=$task['name']?></a></span>
-                        </label>
-                    </td>
-                    <td class="task__file">
-                        <a class="download-link" href="/"><?=$task['file']?></a>
-                    </td>
-                    <td class="task__date"><?=$task['date_exec']?></td>
-                </tr>
-          <? endif;?>       
+            <tr class="tasks__item task <?print(warn_date($tasks_list, $task['date_exec']))?>">
+                <td class="task__select">
+                    <label class="checkbox task__checkbox">
+                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=$checked ?>>
+                        <span class="checkbox__text <?=$complected ?>"><a class="main-navigation__list-item-link" href="index.php?tabl=<?=$task['id']?>"><?=$task['name']?></a></span>
+                    </label>
+                </td>
+                <? if ($task['file'] !== 'NULL') : ?>
+                <td class="task__file">  
+                    <a class="download-link" href="<?=$task['file']?>"><?=$task['file']?>
+                    </a>
+                </td>
+                <?else :?>
+                <td class="task__file">              
+                </td>
+                <?endif?>
+                <td class="task__date"><?=$task['date_exec']?></td>
+            </tr>
+            <? endif;?>       
         <?php endforeach;?>
     </table>

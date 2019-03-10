@@ -9,6 +9,8 @@
  *
  * @return mysqli_stmt Подготовленное выражение
  */
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $con = mysqli_connect("localhost", "root", "", "works") or die (mysqli_error($con));
 
@@ -99,10 +101,6 @@ function include_template($name, $data) {
   
         return  $dt_warn;
         
-    }
-
-    if ($task['status'] == 1) {
-        $checked = "checked";
     }
     
     ?>

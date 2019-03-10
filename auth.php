@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user'] = $user;
 
         } else {
-            $errors['password'] = 'Неверный пароль';password_hash($us, PASSWORD_DEFAULT);
+            $errors['password'] = 'Неверный пароль';
 
         }
 
@@ -40,12 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-} else {
-    if (isset($_SESSION['user'])) {
-        $content = include_template("auth.php.", ['form' => $form, 'errors' => $errors]);
-    } else {
-        $content = include_template('auth.php', []);
-    }
+}
+else {
+
+    $content = include_template('auth.php', []);
+
 }
 
 print($content);

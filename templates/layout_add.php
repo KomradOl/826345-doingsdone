@@ -41,7 +41,7 @@
       <p class="form__message"><?=$errors['preview']?></p>
       <?php endif ?>
       <div class="form__input-file">
-        <input class="visually-hidden" type="file" name="preview" id="preview" value="">
+        <input class="visually-hidden" type="file" name="preview" id="preview" value="Скачать">
 
         <label class="button button--transparent" for="preview">
           <span>Выберите файл</span>

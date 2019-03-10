@@ -8,7 +8,7 @@
         <?php if(isset($errors['name'])) : ?>
         <p class="form__message"><?=$errors['name']?></p>
         <?php endif ?>
-        <?php $classname = isset($errors['name']) ? "form__input--error" : "" ; $value_name = isset($task['name'])? $task['name'] : "";?>
+        <?php $classname = isset($errors['name']) ? "form__input--error" : "" ; $value_name = isset($project['name'])? $project['name'] : "";?>
         <input class="form__input <?=$classname ?>" type="text" name="name" id="project_name" value="<?=$value_name ?>" placeholder="Введите название проекта">
       </div>
 

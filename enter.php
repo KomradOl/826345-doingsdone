@@ -5,6 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $form = $_POST;
 
     $required = ['email', 'password', 'name'];
+    $dict     = ['email' => 'E-mail', 'password' => 'Пароль', 'name' => 'Имя'];
     $errors   = [];
     foreach ($required as $field) {
         if (empty($form[$field])) {
@@ -19,33 +20,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($user !== null) {
         $errors['email'] = 'Такой E-mail уже используется';
-    } else {
+    } 
+    else {
         if (filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
-            $email = $form['email'];
+            $user['email'] = $form['email'];
         } else {
             $errors['email'] = 'E-mail введён некорректно';
         }
 
-        $user['pass'] = $form['password'];
-        $user['name'] = $form['name'];
-    }
+        $user['pass'] = password_hash($form['password'], PASSWORD_DEFAULT);
+       	$user['name'] = $form['name'];
+       }
 
     if (!count($errors)) {
 
         $sql  = "INSERT INTO users (date_reg, name, email, pass) VALUES (NOW(), ?, ?, ?)";
-        $stmt = db_get_prepare_stmt($con, $sql, [$form['name'], $form['email'], $form['password']]);
+        $stmt = db_get_prepare_stmt($con, $sql, [$user['name'], $form['email'], $user['pass']]);
         $res  = mysqli_stmt_execute($stmt);
-
-    }
-    if ($res && empty($errors)) {
         header("Location: /auth.php");
         exit();
     }
+    else {
+    	$content = include_template('enter_add.php', ['required'=> $required, 'errors' => $errors, 'dict' =>$dict]);
+    }
+
 
 }
-
-$content = include_template('enter_add.php', ['form' => $form, 'errors' => $errors, 'required' => $required]);
-
+else {
+$content = include_template('enter_add.php', []);
+}
 print($content);
 
 ?>

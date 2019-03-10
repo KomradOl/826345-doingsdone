@@ -11,13 +11,12 @@ if (isset($_SESSION['user'])) {
         $sql_tasks    = "SELECT  status FROM tasks  WHERE id = $tabl";
         $result_tasks = mysqli_query($con, $sql_tasks) or die(mysqli_error($con));
         $tasks_stat   = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
-        $status       = $tasks_stat['status'];
-
-        if ($status == 0 || $status == null) {
-            $sql_tasks    = "UPDATE tasks SET status = 1 WHERE id = $tabl";
-            $result_tasks = mysqli_query($con, $sql_tasks) or die(mysqli_error($con));
-        }
+        if (isset($tasks_stat)){
+                $sql_tasks    = "UPDATE tasks SET status = 1 WHERE id = $tabl";
+                $result_tasks = mysqli_query($con, $sql_tasks) or die(mysqli_error($con));
+            }   
     }
+
     if ($tab = $_GET["tab"] ?? null) {
         $tab = (int) $tab;
 
@@ -55,14 +54,20 @@ if (isset($_SESSION['user'])) {
         $sql_tasks    = "SELECT t.date_exec, t.status, t.file, t.id, t.name, p.NAME pname, t.project_id  FROM tasks t join project p on p.ID = t.project_id WHERE t.user_id = $user_id";
         $result_tasks = mysqli_query($con, $sql_tasks) or die(mysqli_error($con));
         $tasks_list   = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
-        print($tasks_list['tstatus']);
-    }
-}
 
+    }
 $page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks, "tasks_list" => $tasks_list]);
 
 $layout_content = include_template("layout.php", ["content" => $page_content, "title" => "Дела в порядке", "user_name" => $user_name, "categories" =>
     $categories, "tasks_list" => $tasks_list]);
+}
+else {
+
+$page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks]);
+
+$layout_content = include_template("layout.php", ["content" => $page_content, "title" => "Дела в порядке" ]);
+
+}
 
 print($layout_content);
 
