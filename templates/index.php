@@ -14,12 +14,9 @@
             <a href="/" class="tasks-switch__item">Просроченные</a>
         </nav>
 
-        <a href="index.php?chek">
+        <a>
             <label class="checkbox">
-                <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
-                <?php if($show_complete_tasks == 1) : ?>
-                    <input class="checkbox__input visually-hidden show_completed" name="show" type="checkbox" checked>
-                <?php endif; ?>
+                <input class="checkbox__input visually-hidden show_completed" name="show" type="checkbox" <?= $show_complete_tasks ? 'checked' : '' ?> >
                 <span class="checkbox__text">Показывать выполненные</span>
             </label>
         </a>
@@ -38,7 +35,7 @@
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=$checked ?>>
-                        <span class="checkbox__text <?=$complected ?>"><a class="main-navigation__list-item-link" href="index.php?tabl=<?=$task['id']?>"><?=$task['name']?></a></span>
+                        <span class="checkbox__text <?=$complected ?>"><a class="main-navigation__list-item-link" href="index.php?tabl=<?=$task['id']?>"><?=htmlspecialchars($task['name'])?></a></span>
                     </label>
                 </td>
                 <? if ($task['file'] !== 'NULL') : ?>

@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="user-menu__data">
-                    <p><?=$user_name;?></p>
+                    <p><?=htmlspecialchars($user_name)?></p>
 
                     <a href="logout.php">Выйти</a>
                 </div>
@@ -39,13 +39,12 @@
         <div class="content">
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
-                
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
                         <?php foreach($categories as $cat): ?>    
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="index.php?tab=<?=$cat['id']?>"><?=$cat['name'];?></a>
+                            <a class="main-navigation__list-item-link" href="index.php?tab=<?=$cat['id']?>"><?=htmlspecialchars($cat['name']);?></a>
                             <span class="main-navigation__list-item-count"><?=output_namber($tasks_list, $cat['id'])?></span>
                         </li>
                         <?php endforeach; ?>

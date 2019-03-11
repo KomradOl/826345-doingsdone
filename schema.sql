@@ -1,32 +1,32 @@
-CREATE DATABASE WORKS 
-DEFAULT CHARACTER SET UTF8
-DEFAULT COLLATE UTF8_GENERAL_CI;
+CREATE DATABASE works 
+DEFAULT character SET utf8
+DEFAULT collate utf8_general_ci;
 
-USE WORKS;
+use works;
 
-CREATE TABLE PROJECT (
-		ID INT AUTO_INCREMENT PRIMARY KEY,
-		NAME CHAR(100),
-		USER_ID INT);
+CREATE TABLE project (
+		id int auto_increment PRIMARY KEY,
+		name char(100),
+		user_id int);
 
-CREATE TABLE TASKS (
-		ID INT AUTO_INCREMENT PRIMARY KEY,
-		DATE_CREATE DATE,
-		DATE_EXEC DATE,
-		STATUS INT,
-		NAME CHAR(100),
-		FILE CHAR(100),
-		DEADLINE DATETIME,
-		PROJECT_ID INT,
-		USER_ID INT);
+CREATE TABLE tasks (
+		id int auto_increment PRIMARY KEY,
+		date_create date,
+		date_exec date,
+		status int,
+		name char(100),
+		file char(100),
+		deadline datetime,
+		project_id int,
+		user_id int);
 
-CREATE TABLE USERS (
-		ID INT AUTO_INCREMENT PRIMARY KEY,
-		DATE_REG DATE,
-		NAME CHAR(100),
-		EMAIL CHAR(100),
-		PASS CHAR(100));
+CREATE TABLE users (
+		id int auto_increment PRIMARY KEY,
+		date_REG date,
+		name char(100),
+		email char(100),
+		pass char(100));
 		
-CREATE INDEX n_TASK ON TASKS(NAME);
-CREATE INDEX n_USER ON USERS(NAME);
-CREATE INDEX n_PROJECT ON PROJECT(NAME);
+CREATE INDEX n_task ON tasks(name);
+CREATE INDEX n_user ON users(name);
+CREATE INDEX n_project ON project(name);

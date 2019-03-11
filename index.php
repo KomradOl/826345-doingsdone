@@ -1,6 +1,8 @@
 <?php
 require_once "functions.php";
-$show_complete_tasks = rand(0, 1);
+if ($show_complete_tasks = $_GET['show_completed'] ?? null) {
+$show_complete_tasks = (int)$show_complete_tasks;
+}
 if (isset($_SESSION['user'])) {
     $user      = $_SESSION['user'];
     $user_id   = $user['id'];
@@ -11,10 +13,11 @@ if (isset($_SESSION['user'])) {
         $sql_tasks    = "SELECT  status FROM tasks  WHERE id = $tabl";
         $result_tasks = mysqli_query($con, $sql_tasks) or die(mysqli_error($con));
         $tasks_stat   = mysqli_fetch_all($result_tasks, MYSQLI_ASSOC);
-        if (isset($tasks_stat)){
-                $sql_tasks    = "UPDATE tasks SET status = 1 WHERE id = $tabl";
-                $result_tasks = mysqli_query($con, $sql_tasks) or die(mysqli_error($con));
-            }   
+        $new_status = $tasks_stat[0]['status'] === '1' ? 0 : 1;
+        if (isset($tasks_stat)) {
+        $sql_tasks = "UPDATE tasks SET status = $new_status WHERE id = $tabl";
+        $result_tasks = mysqli_query($con, $sql_tasks) or die(mysqli_error($con));
+        }   
     }
 
     if ($tab = $_GET["tab"] ?? null) {

@@ -21,7 +21,7 @@
       <select class="form__input form__input--select <?=$classproject?>" name="project" id="project">
         <option><?=$value_project?></option>
         <?php foreach($categories as $cat): ?>
-        <option><?=$cat['name']?></option>
+        <option><?=htmlspecialchars($cat['name'])?></option>
         <?endforeach ?>
       </select>
     </div>
