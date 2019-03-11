@@ -1,8 +1,6 @@
 <?php
 require_once "functions.php";
-if ($show_complete_tasks = $_GET['show_completed'] ?? null) {
-$show_complete_tasks = (int)$show_complete_tasks;
-}
+$show_complete_tasks = (int)($_GET['show_completed'] ?? null);
 if (isset($_SESSION['user'])) {
     $user      = $_SESSION['user'];
     $user_id   = $user['id'];
