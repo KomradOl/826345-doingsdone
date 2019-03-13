@@ -8,10 +8,10 @@
 
     <div class="tasks-controls">
         <nav class="tasks-switch">
-            <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-            <a href="/" class="tasks-switch__item">Повестка дня</a>
-            <a href="/" class="tasks-switch__item">Завтра</a>
-            <a href="/" class="tasks-switch__item">Просроченные</a>
+            <a href="index.php?task_choice=<?=1?>" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
+            <a href="index.php?task_choice=<?=2?>" class="tasks-switch__item">Повестка дня</a>
+            <a href="index.php?task_choice=<?=3?>" class="tasks-switch__item">Завтра</a>
+            <a href="index.php?task_choice=<?=4?>" class="tasks-switch__item">Просроченные</a>
         </nav>
 
         <a>
@@ -29,16 +29,31 @@
                 <? $checked = "checked" ?>
             <? else : $checked = "unchecked" ?> 
             <?endif ?>
-            <? if($show_complete_tasks != 0 || $task['status'] != 1) : ?>
+            <?$show_tasks = 0?>
+            <?if ($task_choice == 1) : ?>
+            <?$show_tasks = 0 ?>
+            <?endif?>
+            <?if ($task_choice == 2) : ?>
+            <?$show_tasks = choice_date1($task['date_exec'])?>
+            <?endif?>
+            <?if ($task_choice == 3) : ?>
+            <?$show_tasks = choice_date2($task['date_exec'])?>
+            <?endif?>
+            <?if ($task_choice == 4) : ?>
+            <?$show_tasks = choice_date3($task['date_exec'])?>
+            <?endif?>
+            
+            <? if($show_complete_tasks == 1 || $task['status'] == 0 && $show_tasks !== 1) : ?>
                 <?$complected = "task--completed"?>
-            <tr class="tasks__item task <?print(warn_date($tasks_list, $task['date_exec']))?>">
+            <tr class="tasks__item task <?print(warn_date($task['date_exec']))?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
+                        <a href="index.php?stat_task=<?=$task['id']?>">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=$checked ?>>
-                        <span class="checkbox__text <?=$complected ?>"><a class="main-navigation__list-item-link" href="index.php?tabl=<?=$task['id']?>"><?=htmlspecialchars($task['name'])?></a></span>
+                        <span class="<?=$complected ?> checkbox__text main-navigation__list-item-link "><?=htmlspecialchars($task['name'])?></span></a>
                     </label>
                 </td>
-                <? if ($task['file'] !== 'NULL') : ?>
+                <? if ($task['file'] !== NULL) : ?>
                 <td class="task__file">  
                     <a class="download-link" href="<?=$task['file']?>"><?=$task['file']?>
                     </a>

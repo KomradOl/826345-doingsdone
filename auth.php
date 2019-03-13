@@ -41,10 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 }
-else {
+
 
     $content = include_template('auth.php', []);
 
-}
 
 print($content);

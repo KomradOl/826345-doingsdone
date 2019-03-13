@@ -10,11 +10,14 @@ if (isset($_SESSION['user'])) {
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $task = $_POST;
-
+        
         $required = ['name'];
         $dict     = ['name' => 'Название проекта'];
         $errors   = [];
+        $task = $_POST;
+        if (preg_match("/script|http|&lt;|&gt;|&lt;|&gt;|SELECT|UNION|UPDATE|exe|exec|INSERT|tmp/i", $task['name'])) {
+            $errors['name'] = 'Введите правильное имя';
+        }
 
         foreach ($required as $key) {
             if (empty($task[$key])) {
