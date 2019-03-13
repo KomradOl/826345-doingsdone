@@ -47,7 +47,7 @@ if (isset($_SESSION['user'])) {
     }
     $task_choice = (int)($_GET["task_choice"] ?? null);
     
-    $page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks, "tasks_list" => $tasks_list, 'task_choice' => $task_choice]);
+    $page_content = include_template("index.php", ["show_complete_tasks" => $show_complete_tasks, "tasks_list" => $tasks_list, 'task_choice' => $task_choice, 'tab' =>$tab]);
 
     $layout_content = include_template("layout.php", ["content" => $page_content, "title" => "Дела в порядке", "user_name" => $user_name, "categories" =>
         $categories, "tasks_list" => $tasks_list]);

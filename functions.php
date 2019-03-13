@@ -119,44 +119,29 @@ function categories_id($categories)
     return $categories_id;
 }
 
-function choice_date1($date)
-{
+function choice_date($date, $task_choice) {
     date_default_timezone_set("Europe/Samara");
     setlocale(LC_ALL, "ru_RU.utf8");
-    $dt_end = strtotime($date);
-    $dt_dif = floor(($dt_end / 86400) - (time() / 86400));
-     $show_tasks = 1;
-    if ($dt_dif == -1) {
+    $dt_end     = strtotime($date);
+    $dt_dif     = floor(($dt_end / 86400) - (time() / 86400));
+    $show_tasks = 1;
+    if ($task_choice == 1) {
+        $show_tasks = 0;
+    }
+    if ($task_choice == 2) {
+        if ($dt_dif == -1) {
             $show_tasks = 0;
-        } 
-
-    return $show_tasks;
-}
-
-function choice_date2($date)
-{
-    date_default_timezone_set("Europe/Samara");
-    setlocale(LC_ALL, "ru_RU.utf8");
-    $dt_end = strtotime($date);
-    $dt_dif = floor(($dt_end / 86400) - (time() / 86400));
-     $show_tasks = 1;
-    if ($dt_dif == 0) {
+        }
+    }
+    if ($task_choice == 3) {
+        if ($dt_dif == 0) {
             $show_tasks = 0;
-        } 
-
-    return $show_tasks;
-}
- 
- function choice_date3($date)
-{
-    date_default_timezone_set("Europe/Samara");
-    setlocale(LC_ALL, "ru_RU.utf8");
-    $dt_end = strtotime($date);
-    $dt_dif = floor(($dt_end / 86400) - (time() / 86400));
-     $show_tasks = 1;
-    if ($dt_dif < -1) {
+        }
+    }
+    if ($task_choice == 4) {
+        if ($dt_dif < -1) {
             $show_tasks = 0;
-        } 
-
+        }
+    }
     return $show_tasks;
 }

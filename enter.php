@@ -40,9 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: /auth.php");
         exit();
     }
-    else {
+
     	$content = include_template('enter_add.php', ['required'=> $required, 'errors' => $errors, 'dict' =>$dict]);
-    }
+
 
 
 }

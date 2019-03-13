@@ -29,18 +29,10 @@
                 <? $checked = "checked" ?>
             <? else : $checked = "unchecked" ?> 
             <?endif ?>
-            <?$show_tasks = 0?>
-            <?if ($task_choice == 1) : ?>
-            <?$show_tasks = 0 ?>
-            <?endif?>
-            <?if ($task_choice == 2) : ?>
-            <?$show_tasks = choice_date1($task['date_exec'])?>
-            <?endif?>
-            <?if ($task_choice == 3) : ?>
-            <?$show_tasks = choice_date2($task['date_exec'])?>
-            <?endif?>
-            <?if ($task_choice == 4) : ?>
-            <?$show_tasks = choice_date3($task['date_exec'])?>
+            
+            <?if ($task_choice !== NULL && $tab == NULL) : ?>
+            <?$show_tasks = choice_date($task['date_exec'], $task_choice)?>
+            <?else : $show_tasks = 0 ?>
             <?endif?>
             
             <? if($show_complete_tasks == 1 || $task['status'] == 0 && $show_tasks !== 1) : ?>
