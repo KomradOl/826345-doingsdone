@@ -22,7 +22,7 @@ function db_get_prepare_stmt($con, $sql, $data = [])
 {
     $stmt = mysqli_prepare($con, $sql);
 
-    if ($data) {
+ 
         $types     = '';
         $stmt_data = [];
 
@@ -47,7 +47,7 @@ function db_get_prepare_stmt($con, $sql, $data = [])
 
         $func = 'mysqli_stmt_bind_param';
         $func(...$values);
-    }
+ 
 
     return $stmt;
 }

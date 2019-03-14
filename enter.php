@@ -20,8 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($user !== null) {
         $errors['email'] = 'Такой E-mail уже используется';
-    } 
-    else {
+    } else {
         if (filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
             $user['email'] = $form['email'];
         } else {
@@ -29,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $user['pass'] = password_hash($form['password'], PASSWORD_DEFAULT);
-       	$user['name'] = $form['name'];
-       }
+        $user['name'] = $form['name'];
+    }
 
     if (!count($errors)) {
 
@@ -41,14 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    	$content = include_template('enter_add.php', ['required'=> $required, 'errors' => $errors, 'dict' =>$dict]);
+    $content = include_template('enter_add.php', ['required' => $required, 'errors' => $errors, 'dict' => $dict]);
 
-
-
-}
-else {
-$content = include_template('enter_add.php', []);
+} else {
+    $content = include_template('enter_add.php', []);
 }
 print($content);
-
-?>

@@ -74,4 +74,4 @@ if (isset($_SESSION['user'])) {
         $categories, "tasks_list" => $tasks_list]);
 
 }
-print($layout_content);
+ print($layout_content ?? '');
